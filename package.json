@@ -1,0 +1,16 @@
+{
+  "name": "blog-package",
+  "version": "1.0.0",
+  "description": "il-mio-primo-blog",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nicola Pasqua",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
