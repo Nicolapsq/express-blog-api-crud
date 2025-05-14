@@ -3,10 +3,31 @@ const posts = require("../data/posts.js");
 
 // definisco la funzione index
 function index(req, res) {
-       res
-    .json({
+    // vado a leggere i parametri che vado ad inserire all'interno dell'URL
+    const filterTag = req.query.tags;
+    const filterTitle = req.query.title;
+    console.log(filterTag);
+    console.log(filterTitle);
+    
+    // vado a filtrare in base alle chiavi e i parametri che andrò ad inserire
+
+    // creo una nuova variabile con l'array che andro a filtrare
+    let filterPosts = posts;
+    
+    if (filterTag) {
+        // vado a filtrare in base alla chiave tags
+        filterPosts = filterPosts.filter(post => post.tags.includes(filterTag));
+    }
+
+    if (filterTitle) {
+        // vado a filtrare in base alla chiave title
+        filterPosts = filterPosts.filter(post => post.title.includes(filterTitle));
+    }
+       res.json({
         message: "lettura della lista dei post",
-        posts
+        // posts,
+        // visualizza in json il nuovo array filtrato
+        postFiltrati: filterPosts
     });
 };
 
@@ -16,7 +37,9 @@ function show(req, res) {
     // cerco il post corrispondente all'id (parametro dinamico)
     const post = posts.find(post => post.id === postId);
     if (!post) {
-        return res.status(404).json(
+        return res
+        .status(404)
+        .json(
            {
                errore: "post non trovato"
            }
@@ -48,7 +71,9 @@ function destroy(req, res) {
     // cerco il post corrispondente all'id (parametro dinamico)
     const post = posts.find(post => post.id === postId);
     if (!post) {
-        return res.status(404).json(
+        return res
+        .status(404)
+        .json(
            {
                errore: "post non trovato"
            }
@@ -59,11 +84,11 @@ function destroy(req, res) {
     // rimuovo il post con l'indice in questione
     posts.splice(index, 1);
     console.log("Lista aggiornata", posts);
-    // console.log(res.status(204));
-    res.status(204).json(
+    res
+    .status(204)
+    .json(
         {
-            message: "eliminazione del post " + postId,
-            post
+            message: "eliminazione del post" + postId
         }
     );
 };
