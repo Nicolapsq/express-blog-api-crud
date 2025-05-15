@@ -18,10 +18,10 @@ router.get("/:id", postController.show);
 // rotta per store (creazione di un nuovo oggetto nella lista)
 router.post("/", postController.store);
 
-// rotta per modify (modifica completa)
+// rotta per update (modifica completa)
 router.put("/:id", postController.update);
 
-// rotta per update (modifica parziale)
+// rotta per modify (modifica parziale)
 router.patch("/:id", postController.modify);
 
 // rotta per destroy

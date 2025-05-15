@@ -2,19 +2,22 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-// importo da routers/posts (registro dentro questo file (app.js))
 const postRouter = require("./routers/posts.js");
-
-// routers (include tutte le rotte)
-app.use(postRouter);
-
-app.use(express.static("public"));
-
-// importazione dell' array
-// const posts = require("./array.js")
 
 // importazione dell' array da posts.js
 const posts = require("./data/posts.js");
+
+// routers (include tutte le rotte) -middleware-
+
+// routers (include tutte le rotte statiche) -middleware-
+app.use(express.static("public"));
+
+// registro in express i body-parser (cosi posso leggere l'oggetto req.body) -middleware-
+app.use(express.json());
+
+// importo da routers/posts (registro dentro questo file (app.js))
+// da posizionare sempre dopo i middleware
+app.use(postRouter);
 
 // rotta / (root)
 // app.get("/", (req, res) => {
