@@ -21,8 +21,8 @@ function index(req, res) {
         // vado a filtrare in base alla chiave title
         filterPosts = filterPosts.filter(post => post.title.includes(filterTitle));
     }
-    console.log(filterTag);
-    console.log(filterTitle);
+    // console.log(filterTag);
+    // console.log(filterTitle);
        res.json({
         message: "lettura della lista dei post",
         // posts,
@@ -93,7 +93,8 @@ function update(req, res) {
             }
         );
     };
-    // sostituisco l'intero post
+    // sostituisco l'intero post:
+    // prendo larray da postman
     const {title, content, image, tags} = req.body;
     const updatePost = {id: postId, title, content, image, tags};
     // prendo l'indice dell'id trovato
@@ -102,13 +103,37 @@ function update(req, res) {
     posts.splice(index, 1, updatePost);
     // res.status(200);
     res.json({
-        // message: "modifica di tutto l'oggetto della lista",
+        message: "modifica di tutto l'oggetto della lista",
         updatePost
     });
 }
 // definisco la funzione modify
 function modify(req, res) {
-    res.json("modifica di un solo elemento di un oggetto della lista");
+    const postId = parseInt(req.params.id);
+    const post = posts.find(post => post.id === postId);
+    if (!post) {
+        return res
+        .status(404)
+        .json(
+            {
+                errore: "post non trovato"
+            }
+        );
+    };
+    // sostituisco solo una parte del post
+    // prendo larray da postman
+    const {title, content, image, tags} = req.body;
+    // sostituisco solo il valore nella chiave "title"
+    post.title = req.body.title
+
+    res.json({
+        message:"modifica di un solo elemento di un oggetto della lista",
+        post
+    });
+     console.log({
+        message:"modifica di un solo elemento di un oggetto della lista",
+        post
+    });
 };
 
 function destroy(req, res) {
